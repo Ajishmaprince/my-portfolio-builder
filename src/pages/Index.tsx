@@ -1,3 +1,5 @@
+import { useState, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
 import BinaryRain from "@/components/portfolio/BinaryRain";
 import Navbar from "@/components/portfolio/Navbar";
 import HeroSection from "@/components/portfolio/HeroSection";
@@ -9,22 +11,35 @@ import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import ContactSection from "@/components/portfolio/ContactSection";
 import Footer from "@/components/portfolio/Footer";
 import ScrollToTop from "@/components/portfolio/ScrollToTop";
+import LoadingScreen from "@/components/portfolio/LoadingScreen";
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadingComplete = useCallback(() => {
+    setIsLoading(false);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-background">
-      <BinaryRain />
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <CertificationsSection />
-      <ProjectsSection />
-      <ContactSection />
-      <Footer />
-      <ScrollToTop />
-    </div>
+    <>
+      <AnimatePresence>
+        {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      </AnimatePresence>
+
+      <div className={`min-h-screen bg-background ${isLoading ? "overflow-hidden h-screen" : ""}`}>
+        <BinaryRain />
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <CertificationsSection />
+        <ProjectsSection />
+        <ContactSection />
+        <Footer />
+        <ScrollToTop />
+      </div>
+    </>
   );
 };
 

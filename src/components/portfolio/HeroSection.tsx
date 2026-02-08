@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import profilePhoto from "@/assets/profile-photo.jpeg";
 
 const phrases = [
   "Building the future with intelligent systems",
@@ -55,46 +56,78 @@ const HeroSection = () => {
         }}
       />
 
-      <div className="max-w-[1200px] mx-auto px-8 relative z-10">
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="font-orbitron text-5xl sm:text-6xl md:text-7xl lg:text-[6rem] font-bold text-primary text-neon uppercase tracking-[5px] leading-none mb-6 animate-glitch"
-        >
-          AJISHMA SRUTHI
-        </motion.h1>
+      <div className="max-w-[1200px] mx-auto px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12 w-full">
+        {/* Text Content */}
+        <div className="flex-1">
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="font-orbitron text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold text-primary text-neon uppercase tracking-[5px] leading-none mb-6 animate-glitch"
+          >
+            AJISHMA SRUTHI
+          </motion.h1>
 
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-2xl sm:text-3xl md:text-[2.5rem] font-light text-foreground max-w-[700px] mb-8 relative"
-        >
-          AI/ML Engineer & Web Developer
-          <span className="absolute -bottom-4 left-0 w-[150px] h-[3px] bg-gradient-primary" />
-        </motion.h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-2xl sm:text-3xl md:text-[2.5rem] font-light text-foreground max-w-[700px] mb-8 relative"
+          >
+            AI/ML Engineer & Web Developer
+            <span className="absolute -bottom-4 left-0 w-[150px] h-[3px] bg-gradient-primary" />
+          </motion.h2>
 
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="font-orbitron text-accent font-semibold text-lg sm:text-xl tracking-wider"
+            style={{ textShadow: "0 0 5px hsl(48 100% 50% / 0.7)" }}
+          >
+            {text}
+            <span className="inline-block w-[10px] h-5 bg-primary animate-blink align-middle ml-1" />
+          </motion.div>
+
+          <motion.a
+            href="#contact"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="inline-block mt-8 px-10 py-4 border-2 border-primary text-primary font-orbitron font-semibold uppercase tracking-wider shadow-neon transition-all duration-300 hover:bg-primary/10 hover:text-foreground hover:shadow-neon-lg"
+          >
+            Connect With Me
+          </motion.a>
+        </div>
+
+        {/* Profile Image */}
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="font-orbitron text-accent font-semibold text-lg sm:text-xl tracking-wider"
-          style={{ textShadow: "0 0 5px hsl(48 100% 50% / 0.7)" }}
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.3 }}
+          className="relative flex-shrink-0"
         >
-          {text}
-          <span className="inline-block w-[10px] h-5 bg-primary animate-blink align-middle ml-1" />
+          <div className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] lg:w-[360px] lg:h-[450px]">
+            {/* Neon border frame */}
+            <div className="absolute inset-0 border-2 border-primary shadow-neon rounded-sm translate-x-3 translate-y-3" />
+            <div className="absolute inset-0 border-2 border-secondary/50 rounded-sm -translate-x-2 -translate-y-2" />
+            <img
+              src={profilePhoto}
+              alt="Ajishma Sruthi P"
+              className="relative w-full h-full object-cover object-top rounded-sm grayscale-[20%] hover:grayscale-0 transition-all duration-500"
+              style={{
+                boxShadow: "0 0 30px hsl(185 100% 50% / 0.3), 0 0 60px hsl(185 100% 50% / 0.1)",
+              }}
+            />
+            {/* Scanline overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-20 rounded-sm"
+              style={{
+                background: "repeating-linear-gradient(0deg, transparent, transparent 2px, hsl(185 100% 50% / 0.05) 2px, hsl(185 100% 50% / 0.05) 4px)",
+              }}
+            />
+          </div>
         </motion.div>
-
-        <motion.a
-          href="#contact"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="inline-block mt-8 px-10 py-4 border-2 border-primary text-primary font-orbitron font-semibold uppercase tracking-wider shadow-neon transition-all duration-300 hover:bg-primary/10 hover:text-foreground hover:shadow-neon-lg"
-        >
-          Connect With Me
-        </motion.a>
       </div>
     </section>
   );

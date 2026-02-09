@@ -24,7 +24,7 @@ const AboutSection = () => {
           >
             {[
               "I'm Ajishma Sruthi P, an AI-focused Computer Science student passionate about intelligent systems and automation.",
-              "Currently pursuing B.E in Computer Science & Engineering (2023-2027) at M. Kumarasamy College of Engineering.",
+              "Currently pursuing B.E in Computer Science & Engineering (AI & ML) (2023-2027) at M. Kumarasamy College of Engineering, Karur.",
               "My expertise spans across Web Development, Machine Learning, Cyber Security, and Data-driven problem solving.",
               "I aim to apply my skills to solve real-world challenges and contribute to cutting-edge AI projects.",
             ].map((text, i) => (
@@ -70,7 +70,7 @@ const AboutSection = () => {
                   education
                 </p>
                 <p className="text-foreground pl-8">
-                  B.E CSE (2023-2027) @ MKCE
+                  B.E CSE (AI & ML) (2023-2027) @ MKCE, Karur
                 </p>
               </div>
               <div>

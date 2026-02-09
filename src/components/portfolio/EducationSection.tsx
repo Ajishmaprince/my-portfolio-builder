@@ -3,16 +3,10 @@ import { GraduationCap } from "lucide-react";
 
 const education = [
   {
-    degree: "B.Tech in Artificial Intelligence & Machine Learning",
-    institution: "Nehru College of Engineering and Research Centre",
-    period: "2022 – 2026",
+    degree: "B.E Computer Science & Engineering (AI & ML)",
+    institution: "M. Kumarasamy College of Engineering, Karur",
+    period: "2023 – 2027",
     details: "Pursuing a comprehensive program covering AI/ML fundamentals, deep learning, data science, and software engineering.",
-  },
-  {
-    degree: "Higher Secondary Education",
-    institution: "GHSS Mannarkkad",
-    period: "2020 – 2022",
-    details: "Completed higher secondary education with a focus on science and mathematics.",
   },
 ];
 

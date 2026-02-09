@@ -6,7 +6,13 @@ const education = [
     degree: "B.E Computer Science & Engineering (AI & ML)",
     institution: "M. Kumarasamy College of Engineering, Karur",
     period: "2023 – 2027",
-    details: "Pursuing a comprehensive program covering AI/ML fundamentals, deep learning, data science, and software engineering.",
+    details: "Pursuing a comprehensive program covering AI/ML fundamentals, deep learning, data science, and software engineering. CGPA: 8.8",
+  },
+  {
+    degree: "Higher Secondary Education",
+    institution: "St. Antony's Matric Higher Secondary School, Kirathoor",
+    period: "2021 – 2023",
+    details: "Completed higher secondary education with a focus on science and mathematics. Scored 85%.",
   },
 ];
 

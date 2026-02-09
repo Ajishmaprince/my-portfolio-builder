@@ -33,6 +33,51 @@ const projects = [
     ],
   },
   {
+    title: "StudyBuddy AI",
+    description:
+      "An AI-powered study assistant that helps students with learning, note-taking, and exam preparation.",
+    tags: ["HTML", "JavaScript", "AI"],
+    image:
+      "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
+    details: [
+      "Built an interactive AI-powered study companion",
+      "Developed using HTML and JavaScript for a lightweight web experience",
+      "Helps students organize notes and prepare for exams",
+      "Integrates AI features for smart study recommendations",
+      "Responsive design for use across devices",
+    ],
+  },
+  {
+    title: "Personal Expense Tracker",
+    description:
+      "A database-driven expense tracking application for managing personal finances with detailed reports.",
+    tags: ["DBMS", "MySQL", "XAMPP", "PHP"],
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80",
+    details: [
+      "Designed and implemented a relational database schema in MySQL",
+      "Used XAMPP for local server and database management",
+      "Tracks income and expenses with category-based filtering",
+      "Generates detailed financial reports and summaries",
+      "CRUD operations for seamless data management",
+    ],
+  },
+  {
+    title: "AllerScan",
+    description:
+      "A mobile-friendly application that helps users identify allergens in food products using scanning technology.",
+    tags: ["Firebase", "JavaScript", "Cloud"],
+    image:
+      "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
+    details: [
+      "Built with Firebase for real-time data storage and authentication",
+      "Scans food products to identify potential allergens",
+      "Provides personalized allergen alerts based on user profiles",
+      "Cloud-based architecture for seamless cross-device access",
+      "Helps users make safer food choices with instant results",
+    ],
+  },
+  {
     title: "Fitness Tracker Insights",
     description:
       "Analyzes users' physical activity data—steps, calories, heart rate, sleep patterns—using R.",

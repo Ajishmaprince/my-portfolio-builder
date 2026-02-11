@@ -1,17 +1,36 @@
 import { motion } from "framer-motion";
+import { Code, Brain, Users, Globe, Cpu, Database, MessageSquare, Award } from "lucide-react";
 
 const skillCategories = [
   {
     title: "Technical",
-    skills: ["Web Development", "Mobile App Dev", "Computer Skills", "HTML/CSS/JS"],
+    icon: Code,
+    skills: [
+      { name: "Web Development", level: 85 },
+      { name: "Mobile App Dev", level: 70 },
+      { name: "HTML/CSS/JS", level: 90 },
+      { name: "Computer Skills", level: 80 },
+    ],
   },
   {
     title: "AI / ML",
-    skills: ["Python", "Scikit-learn", "TensorFlow", "Data Preprocessing"],
+    icon: Brain,
+    skills: [
+      { name: "Python", level: 85 },
+      { name: "Scikit-learn", level: 75 },
+      { name: "TensorFlow", level: 70 },
+      { name: "Data Preprocessing", level: 80 },
+    ],
   },
   {
     title: "Soft Skills",
-    skills: ["Leadership", "Team Management", "Interpersonal Skills", "Communication"],
+    icon: Users,
+    skills: [
+      { name: "Leadership", level: 90 },
+      { name: "Team Management", level: 85 },
+      { name: "Communication", level: 90 },
+      { name: "Interpersonal", level: 85 },
+    ],
   },
 ];
 
@@ -42,19 +61,42 @@ const SkillsSection = () => {
               {/* Shine effect */}
               <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-transparent via-primary/5 to-transparent rotate-45 animate-[shine_3s_infinite] pointer-events-none" />
 
-              <h3 className="font-orbitron text-xl mb-6 text-primary uppercase tracking-wider">
-                {category.title}
-              </h3>
-              <ul className="grid grid-cols-2 gap-3">
-                {category.skills.map((skill) => (
-                  <li
-                    key={skill}
-                    className="bg-primary/10 px-3 py-3 rounded-sm text-sm text-foreground border border-primary/30 text-center transition-all duration-300 hover:bg-primary/20 hover:-translate-y-0.5 hover:shadow-neon"
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center border border-primary/30 group-hover:bg-primary/20 transition-colors">
+                  <category.icon className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="font-orbitron text-xl text-primary uppercase tracking-wider">
+                  {category.title}
+                </h3>
+              </div>
+
+              <div className="space-y-5">
+                {category.skills.map((skill, i) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.15 + i * 0.1 }}
                   >
-                    {skill}
-                  </li>
+                    <div className="flex justify-between mb-1.5">
+                      <span className="text-foreground text-sm">{skill.name}</span>
+                      <span className="text-primary text-xs font-orbitron">{skill.level}%</span>
+                    </div>
+                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        whileInView={{ width: `${skill.level}%` }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1, delay: idx * 0.15 + i * 0.1, ease: "easeOut" }}
+                        className="h-full bg-gradient-primary rounded-full relative"
+                      >
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-neon" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
                 ))}
-              </ul>
+              </div>
             </motion.div>
           ))}
         </div>

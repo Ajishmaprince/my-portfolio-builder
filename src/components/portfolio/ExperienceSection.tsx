@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Briefcase } from "lucide-react";
 
 const experiences = [
   {
@@ -44,8 +45,16 @@ const ExperienceSection = () => {
         </motion.h2>
 
         <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-primary/30" />
+          {/* Timeline line with glow */}
+          <div className="absolute left-4 lg:left-1/2 top-0 bottom-0 w-px bg-primary/30">
+            <motion.div
+              initial={{ height: 0 }}
+              whileInView={{ height: "100%" }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
+              className="w-full bg-primary/60 shadow-neon"
+            />
+          </div>
 
           <div className="space-y-12">
             {experiences.map((exp, idx) => (
@@ -60,34 +69,47 @@ const ExperienceSection = () => {
                 }`}
               >
                 {/* Timeline dot */}
-                <div className="absolute left-4 lg:left-1/2 -translate-x-1/2 w-3 h-3 bg-primary rounded-full shadow-neon z-10 mt-2" />
+                <div className="absolute left-4 lg:left-1/2 -translate-x-1/2 z-10 mt-2">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.15, type: "spring" }}
+                    className="w-10 h-10 bg-background border-2 border-primary rounded-full shadow-neon flex items-center justify-center"
+                  >
+                    <Briefcase className="w-4 h-4 text-primary" />
+                  </motion.div>
+                </div>
 
                 {/* Card */}
-                <div className={`lg:w-1/2 ${idx % 2 === 0 ? "lg:pr-16" : "lg:pl-16"} pl-12 lg:pl-0`}>
-                  <div className="bg-black/30 rounded p-8 border border-primary/20 transition-all hover:shadow-neon-lg hover:border-primary/40">
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <h3 className="font-orbitron text-lg text-primary">
-                        {exp.role}
-                      </h3>
-                      <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-sm border border-primary/30 font-orbitron">
-                        {exp.period}
-                      </span>
+                <div className={`lg:w-1/2 ${idx % 2 === 0 ? "lg:pr-16" : "lg:pl-16"} pl-16 lg:pl-0`}>
+                  <div className="bg-black/30 rounded p-8 border border-primary/20 transition-all hover:shadow-neon-lg hover:border-primary/40 relative overflow-hidden group">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <div className="relative z-10">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <h3 className="font-orbitron text-lg text-primary">
+                          {exp.role}
+                        </h3>
+                        <span className="text-xs bg-primary/10 text-primary px-3 py-1 rounded-sm border border-primary/30 font-orbitron">
+                          {exp.period}
+                        </span>
+                      </div>
+                      <p className="text-accent text-sm mb-4 font-semibold">
+                        {exp.company}
+                      </p>
+                      {exp.points.length > 0 && (
+                        <ul className="space-y-2">
+                          {exp.points.map((point, i) => (
+                            <li
+                              key={i}
+                              className="text-muted-foreground text-sm pl-5 relative before:content-['▹'] before:absolute before:left-0 before:text-primary"
+                            >
+                              {point}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
                     </div>
-                    <p className="text-accent text-sm mb-4 font-semibold">
-                      {exp.company}
-                    </p>
-                    {exp.points.length > 0 && (
-                      <ul className="space-y-2">
-                        {exp.points.map((point, i) => (
-                          <li
-                            key={i}
-                            className="text-muted-foreground text-sm pl-5 relative before:content-['▹'] before:absolute before:left-0 before:text-primary"
-                          >
-                            {point}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
                   </div>
                 </div>
 

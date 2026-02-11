@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
   { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
   { label: "Skills", href: "#skills" },
-  { label: "Certifications", href: "#certifications" },
   { label: "Projects", href: "#projects" },
   { label: "Contact", href: "#contact" },
 ];
@@ -21,59 +22,75 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-primary/20"
-          : "bg-transparent"
+          ? "bg-background/95 backdrop-blur-md border-b border-primary/20 py-3"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-8 py-5 flex justify-between items-center">
-        <div className="font-orbitron font-bold text-2xl text-primary text-neon uppercase tracking-[3px]">
+      <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
+        <motion.a
+          href="#"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="font-orbitron font-bold text-2xl text-primary text-neon uppercase tracking-[3px]"
+        >
           AJISHMA<span className="text-accent">_</span>
-        </div>
+        </motion.a>
 
         {/* Desktop Links */}
-        <div className="hidden md:flex gap-10">
-          {navLinks.map((link) => (
-            <a
+        <div className="hidden md:flex gap-8">
+          {navLinks.map((link, i) => (
+            <motion.a
               key={link.href}
               href={link.href}
-              className="text-muted-foreground font-semibold text-[1.1rem] uppercase tracking-wider relative transition-colors hover:text-primary hover:text-neon group"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.05 }}
+              className="text-muted-foreground font-semibold text-[1.05rem] uppercase tracking-wider relative transition-colors hover:text-primary hover:text-neon group py-1"
             >
               {link.label}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all duration-300 group-hover:w-full" />
-            </a>
+            </motion.a>
           ))}
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-primary text-2xl"
+          className="md:hidden text-primary w-10 h-10 flex items-center justify-center"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          <i className={`fas ${mobileOpen ? "fa-times" : "fa-bars"}`} />
+          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Mobile Menu */}
-      {mobileOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-background/95 backdrop-blur-md border-b border-primary/20 px-8 pb-6"
-        >
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileOpen(false)}
-              className="block py-3 text-muted-foreground font-semibold uppercase tracking-wider hover:text-primary transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-background/95 backdrop-blur-md border-b border-primary/20 overflow-hidden"
+          >
+            <div className="px-8 pb-6 pt-2">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  onClick={() => setMobileOpen(false)}
+                  className="block py-3 text-muted-foreground font-semibold uppercase tracking-wider hover:text-primary transition-colors border-b border-primary/10 last:border-0"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

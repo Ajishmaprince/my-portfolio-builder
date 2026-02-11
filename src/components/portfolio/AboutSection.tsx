@@ -1,4 +1,12 @@
 import { motion } from "framer-motion";
+import { Code, Brain, Shield, Database } from "lucide-react";
+
+const highlights = [
+  { icon: Code, label: "Web Dev", desc: "Full-stack web applications" },
+  { icon: Brain, label: "AI/ML", desc: "Intelligent systems & models" },
+  { icon: Shield, label: "Cyber Sec", desc: "Security & ethical hacking" },
+  { icon: Database, label: "Data", desc: "Data-driven solutions" },
+];
 
 const AboutSection = () => {
   return (
@@ -28,13 +36,37 @@ const AboutSection = () => {
               "My expertise spans across Web Development, Machine Learning, Cyber Security, and Data-driven problem solving.",
               "I aim to apply my skills to solve real-world challenges and contribute to cutting-edge AI projects.",
             ].map((text, i) => (
-              <p
+              <motion.p
                 key={i}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
                 className="text-muted-foreground text-lg leading-relaxed pl-8 relative before:content-['>'] before:absolute before:left-0 before:text-primary before:font-bold"
               >
                 {text}
-              </p>
+              </motion.p>
             ))}
+
+            {/* Highlight cards */}
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              {highlights.map((item, i) => (
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.1 }}
+                  className="flex items-center gap-3 p-4 bg-primary/5 border border-primary/20 rounded-sm hover:bg-primary/10 hover:border-primary/40 transition-all duration-300 group"
+                >
+                  <item.icon className="w-5 h-5 text-primary flex-shrink-0 group-hover:scale-110 transition-transform" />
+                  <div>
+                    <p className="text-foreground text-sm font-semibold">{item.label}</p>
+                    <p className="text-muted-foreground text-xs">{item.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
 
           <motion.div
@@ -56,41 +88,25 @@ const AboutSection = () => {
 
             {/* Terminal body */}
             <div className="font-mono space-y-4">
-              <div>
-                <p className="text-primary">
-                  <span className="text-accent">user@ajishma:~$ </span>whoami
-                </p>
-                <p className="text-foreground pl-8">
-                  AI/ML Engineering Student
-                </p>
-              </div>
-              <div>
-                <p className="text-primary">
-                  <span className="text-accent">user@ajishma:~$ </span>
-                  education
-                </p>
-                <p className="text-foreground pl-8">
-                  B.E CSE (AI & ML) (2023-2027) @ MKCE, Karur
-                </p>
-              </div>
-              <div>
-                <p className="text-primary">
-                  <span className="text-accent">user@ajishma:~$ </span>
-                  skills --top
-                </p>
-                <p className="text-foreground pl-8">
-                  Web Dev, AI/ML, Cyber Security
-                </p>
-              </div>
-              <div>
-                <p className="text-primary">
-                  <span className="text-accent">user@ajishma:~$ </span>
-                  contact
-                </p>
-                <p className="text-foreground pl-8">
-                  ajishmasruthi363@gmail.com | +91 9042379406
-                </p>
-              </div>
+              {[
+                { cmd: "whoami", out: "AI/ML Engineering Student" },
+                { cmd: "education", out: "B.E CSE (AI & ML) (2023-2027) @ MKCE, Karur" },
+                { cmd: "skills --top", out: "Web Dev, AI/ML, Cyber Security" },
+                { cmd: "contact", out: "ajishmasruthi363@gmail.com | +91 9042379406" },
+              ].map((item, i) => (
+                <motion.div
+                  key={item.cmd}
+                  initial={{ opacity: 0, x: -10 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + i * 0.15 }}
+                >
+                  <p className="text-primary">
+                    <span className="text-accent">user@ajishma:~$ </span>{item.cmd}
+                  </p>
+                  <p className="text-foreground pl-8">{item.out}</p>
+                </motion.div>
+              ))}
               <div className="text-primary">
                 <span className="text-accent">user@ajishma:~$ </span>
                 <span className="inline-block w-2.5 h-5 bg-primary animate-blink align-middle" />

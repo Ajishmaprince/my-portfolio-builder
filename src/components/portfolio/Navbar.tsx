@@ -13,33 +13,46 @@ const navLinks = [
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      // Track active section
+      const sections = navLinks.map(l => l.href.replace("#", ""));
+      for (const id of sections.reverse()) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= 200) {
+          setActiveSection(id);
+          break;
+        }
+      }
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-700 ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md border-b border-primary/20 py-3"
-          : "bg-transparent py-5"
+          ? "glass-strong py-3"
+          : "bg-transparent py-6"
       }`}
     >
-      <div className="max-w-[1200px] mx-auto px-8 flex justify-between items-center">
+      <div className="max-w-[1400px] mx-auto px-8 flex justify-between items-center">
         <motion.a
           href="#"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="font-orbitron font-bold text-2xl text-primary text-neon uppercase tracking-[3px]"
+          className="font-orbitron font-black text-xl tracking-[4px] relative"
         >
-          AJISHMA<span className="text-accent">_</span>
+          <span className="text-gradient">AJISHMA</span>
+          <span className="text-accent">_</span>
         </motion.a>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex gap-8">
+        {/* Desktop Links - pill nav */}
+        <div className="hidden md:flex items-center gap-1 glass rounded-full px-2 py-1.5">
           {navLinks.map((link, i) => (
             <motion.a
               key={link.href}
@@ -47,20 +60,30 @@ const Navbar = () => {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.05 }}
-              className="text-muted-foreground font-semibold text-[1.05rem] uppercase tracking-wider relative transition-colors hover:text-primary hover:text-neon group py-1"
+              className={`relative px-5 py-2 rounded-full text-sm font-space font-medium tracking-wider transition-all duration-300 ${
+                activeSection === link.href.replace("#", "")
+                  ? "text-primary-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
             >
-              {link.label}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-primary transition-all duration-300 group-hover:w-full" />
+              {activeSection === link.href.replace("#", "") && (
+                <motion.div
+                  layoutId="nav-pill"
+                  className="absolute inset-0 bg-gradient-primary rounded-full"
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                />
+              )}
+              <span className="relative z-10">{link.label}</span>
             </motion.a>
           ))}
         </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-primary w-10 h-10 flex items-center justify-center"
+          className="md:hidden text-primary w-10 h-10 flex items-center justify-center glass rounded-lg"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
-          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
       </div>
 
@@ -71,9 +94,9 @@ const Navbar = () => {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-background/95 backdrop-blur-md border-b border-primary/20 overflow-hidden"
+            className="md:hidden glass-strong overflow-hidden"
           >
-            <div className="px-8 pb-6 pt-2">
+            <div className="px-8 pb-6 pt-4 space-y-1">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -82,7 +105,11 @@ const Navbar = () => {
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.05 }}
                   onClick={() => setMobileOpen(false)}
-                  className="block py-3 text-muted-foreground font-semibold uppercase tracking-wider hover:text-primary transition-colors border-b border-primary/10 last:border-0"
+                  className={`block py-3 px-4 rounded-lg font-space font-medium tracking-wider transition-all ${
+                    activeSection === link.href.replace("#", "")
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-primary hover:bg-primary/5"
+                  }`}
                 >
                   {link.label}
                 </motion.a>

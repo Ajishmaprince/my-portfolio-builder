@@ -12,6 +12,7 @@ import ProjectsSection from "@/components/portfolio/ProjectsSection";
 import ContactSection from "@/components/portfolio/ContactSection";
 import Footer from "@/components/portfolio/Footer";
 import ScrollToTop from "@/components/portfolio/ScrollToTop";
+import InteractiveTerminal from "@/components/portfolio/InteractiveTerminal";
 import LoadingScreen from "@/components/portfolio/LoadingScreen";
 
 const Index = () => {
@@ -40,6 +41,7 @@ const Index = () => {
         <ContactSection />
         <Footer />
         <ScrollToTop />
+        <InteractiveTerminal />
       </div>
     </>
   );

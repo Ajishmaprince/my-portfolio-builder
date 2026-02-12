@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { GraduationCap } from "lucide-react";
+import { GraduationCap, BookOpen } from "lucide-react";
 
 const education = [
   {
@@ -7,75 +7,68 @@ const education = [
     institution: "M. Kumarasamy College of Engineering, Karur",
     period: "2023 – 2027",
     details: "Pursuing a comprehensive program covering AI/ML fundamentals, deep learning, data science, and software engineering. CGPA: 8.8",
+    icon: GraduationCap,
   },
   {
     degree: "Higher Secondary Education",
     institution: "St. Antony's Matric Higher Secondary School, Kirathoor",
     period: "2021 – 2023",
     details: "Completed higher secondary education with a focus on science and mathematics. Scored 85%.",
+    icon: BookOpen,
   },
 ];
 
 const EducationSection = () => {
   return (
-    <section id="education" className="py-32 relative border-b border-primary/10">
-      <div className="max-w-[1200px] mx-auto px-8">
-        <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
+    <section id="education" className="py-32 relative">
+      <div className="absolute inset-0 bg-gradient-mesh opacity-20 pointer-events-none" />
+
+      <div className="max-w-[1400px] mx-auto px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-orbitron text-4xl md:text-[3.5rem] font-bold text-primary text-neon uppercase tracking-[3px] mb-16 relative inline-block"
+          className="mb-16"
         >
-          Education
-          <span className="absolute -bottom-6 left-0 w-[100px] h-1 bg-gradient-primary rounded shadow-neon" />
-        </motion.h2>
+          <span className="font-space text-xs text-primary/50 tracking-[6px] uppercase block mb-3">Academic background</span>
+          <h2 className="font-orbitron text-4xl md:text-6xl font-black text-gradient uppercase tracking-[4px]">
+            Education
+          </h2>
+        </motion.div>
 
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-[2px] bg-primary/20" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {education.map((item, idx) => (
+            <motion.div
+              key={item.degree}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              className="glass rounded-2xl p-8 hover-glow relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-gradient-mesh opacity-0 group-hover:opacity-30 transition-opacity duration-700" />
 
-          <div className="space-y-12">
-            {education.map((item, idx) => (
-              <motion.div
-                key={item.degree}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.2 }}
-                className="relative pl-16 md:pl-20"
-              >
-                {/* Timeline dot */}
-                <div className="absolute left-[14px] md:left-[22px] top-1 w-5 h-5 rounded-full border-2 border-primary bg-background shadow-neon flex items-center justify-center">
-                  <div className="w-2 h-2 rounded-full bg-primary" />
-                </div>
-
-                <div className="bg-black/30 rounded p-8 border border-primary/20 shadow-neon transition-all duration-400 hover:-translate-y-1 hover:shadow-neon-lg hover:border-primary relative overflow-hidden group">
-                  {/* Shine effect */}
-                  <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-transparent via-primary/5 to-transparent rotate-45 animate-[shine_3s_infinite] pointer-events-none" />
-
-                  <div className="flex items-start gap-4 mb-3">
-                    <GraduationCap className="w-6 h-6 text-accent flex-shrink-0 mt-1" />
-                    <div>
-                      <h3 className="font-orbitron text-lg md:text-xl text-primary text-neon">
-                        {item.degree}
-                      </h3>
-                      <p className="text-foreground font-semibold mt-1">
-                        {item.institution}
-                      </p>
-                    </div>
+              <div className="relative z-10">
+                <div className="flex items-start gap-4 mb-5">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(48 100% 50% / 0.12)", border: "1px solid hsl(48 100% 50% / 0.3)" }}>
+                    <item.icon className="w-6 h-6 text-accent" />
                   </div>
-
-                  <span className="inline-block bg-secondary/20 px-3 py-1 rounded-sm text-xs text-secondary border border-secondary/30 font-orbitron tracking-wider mb-3 ml-10">
-                    {item.period}
-                  </span>
-
-                  <p className="text-muted-foreground text-sm ml-10">
-                    {item.details}
-                  </p>
+                  <div>
+                    <h3 className="font-orbitron text-lg font-bold text-gradient leading-tight">
+                      {item.degree}
+                    </h3>
+                    <p className="text-foreground/70 font-space text-sm mt-1">{item.institution}</p>
+                  </div>
                 </div>
-              </motion.div>
-            ))}
-          </div>
+
+                <div className="glass rounded-full px-4 py-1.5 inline-block mb-4">
+                  <span className="font-orbitron text-[10px] text-primary/60 tracking-[3px]">{item.period}</span>
+                </div>
+
+                <p className="text-muted-foreground text-sm font-space leading-relaxed">{item.details}</p>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

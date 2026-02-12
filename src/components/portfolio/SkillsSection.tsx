@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
-import { Code, Brain, Users, Globe, Cpu, Database, MessageSquare, Award } from "lucide-react";
+import { Code, Brain, Users } from "lucide-react";
 
 const skillCategories = [
   {
     title: "Technical",
     icon: Code,
+    color: "185 100% 50%",
     skills: [
       { name: "Web Development", level: 85 },
       { name: "Mobile App Dev", level: 70 },
@@ -15,6 +16,7 @@ const skillCategories = [
   {
     title: "AI / ML",
     icon: Brain,
+    color: "280 100% 60%",
     skills: [
       { name: "Python", level: 85 },
       { name: "Scikit-learn", level: 75 },
@@ -25,6 +27,7 @@ const skillCategories = [
   {
     title: "Soft Skills",
     icon: Users,
+    color: "340 100% 59%",
     skills: [
       { name: "Leadership", level: 90 },
       { name: "Team Management", level: 85 },
@@ -36,62 +39,73 @@ const skillCategories = [
 
 const SkillsSection = () => {
   return (
-    <section id="skills" className="py-32 relative border-b border-primary/10">
-      <div className="max-w-[1200px] mx-auto px-8">
-        <motion.h2
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="font-orbitron text-4xl md:text-[3.5rem] font-bold text-primary text-neon uppercase tracking-[3px] mb-16 relative inline-block"
-        >
-          Skills
-          <span className="absolute -bottom-6 left-0 w-[100px] h-1 bg-gradient-primary rounded shadow-neon" />
-        </motion.h2>
+    <section id="skills" className="py-32 relative">
+      <div className="absolute inset-0 bg-gradient-mesh opacity-20 pointer-events-none" />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="max-w-[1400px] mx-auto px-8 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16"
+        >
+          <span className="font-space text-xs text-primary/50 tracking-[6px] uppercase block mb-3">What I know</span>
+          <h2 className="font-orbitron text-4xl md:text-6xl font-black text-gradient uppercase tracking-[4px]">
+            Skills
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {skillCategories.map((category, idx) => (
             <motion.div
               key={category.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: idx * 0.15 }}
-              className="bg-black/30 rounded p-8 border border-primary/20 shadow-neon transition-all duration-400 hover:-translate-y-1 hover:shadow-neon-lg hover:border-primary relative overflow-hidden group"
+              transition={{ duration: 0.6, delay: idx * 0.15 }}
+              className="glass rounded-2xl p-8 hover-glow relative overflow-hidden group"
             >
-              {/* Shine effect */}
-              <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-gradient-to-br from-transparent via-primary/5 to-transparent rotate-45 animate-[shine_3s_infinite] pointer-events-none" />
+              {/* Color accent glow */}
+              <div
+                className="absolute -top-20 -right-20 w-40 h-40 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+                style={{ background: `radial-gradient(circle, hsl(${category.color} / 0.15), transparent 70%)`, filter: "blur(30px)" }}
+              />
 
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 bg-primary/10 rounded flex items-center justify-center border border-primary/30 group-hover:bg-primary/20 transition-colors">
-                  <category.icon className="w-5 h-5 text-primary" />
+              <div className="flex items-center gap-4 mb-8 relative z-10">
+                <div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ background: `hsl(${category.color} / 0.12)`, border: `1px solid hsl(${category.color} / 0.3)` }}
+                >
+                  <category.icon className="w-6 h-6" style={{ color: `hsl(${category.color})` }} />
                 </div>
-                <h3 className="font-orbitron text-xl text-primary uppercase tracking-wider">
+                <h3 className="font-orbitron text-lg font-bold uppercase tracking-wider" style={{ color: `hsl(${category.color})` }}>
                   {category.title}
                 </h3>
               </div>
 
-              <div className="space-y-5">
+              <div className="space-y-5 relative z-10">
                 {category.skills.map((skill, i) => (
                   <motion.div
                     key={skill.name}
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
-                    transition={{ delay: idx * 0.15 + i * 0.1 }}
+                    transition={{ delay: idx * 0.1 + i * 0.08 }}
                   >
-                    <div className="flex justify-between mb-1.5">
-                      <span className="text-foreground text-sm">{skill.name}</span>
-                      <span className="text-primary text-xs font-orbitron">{skill.level}%</span>
+                    <div className="flex justify-between mb-2">
+                      <span className="text-foreground/80 text-sm font-space">{skill.name}</span>
+                      <span className="text-xs font-orbitron font-bold" style={{ color: `hsl(${category.color} / 0.7)` }}>{skill.level}%</span>
                     </div>
-                    <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-muted/50 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${skill.level}%` }}
                         viewport={{ once: true }}
-                        transition={{ duration: 1, delay: idx * 0.15 + i * 0.1, ease: "easeOut" }}
-                        className="h-full bg-gradient-primary rounded-full relative"
+                        transition={{ duration: 1.2, delay: idx * 0.1 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className="h-full rounded-full relative"
+                        style={{ background: `linear-gradient(90deg, hsl(${category.color} / 0.6), hsl(${category.color}))` }}
                       >
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-primary shadow-neon" />
+                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full" style={{ background: `hsl(${category.color})`, boxShadow: `0 0 10px hsl(${category.color} / 0.6)` }} />
                       </motion.div>
                     </div>
                   </motion.div>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState, useRef } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import profilePhoto from "@/assets/profile-photo.jpeg";
-import { Download, ArrowDown } from "lucide-react";
+import { ArrowDown, Sparkles } from "lucide-react";
 
 const phrases = [
   "Building the future with intelligent systems",
@@ -20,6 +20,25 @@ const HeroSection = () => {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+  const rotateX = useTransform(smoothY, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(smoothX, [-0.5, 0.5], [-5, 5]);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
+      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
 
   useEffect(() => {
     const fullText = phrases[phraseIndex];
@@ -46,77 +65,94 @@ const HeroSection = () => {
   }, [charIndex, isDeleting, phraseIndex]);
 
   return (
-    <section className="min-h-screen flex items-center relative overflow-hidden">
-      {/* Animated background orbs */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+    <section ref={containerRef} className="min-h-screen flex items-center relative overflow-hidden">
+      {/* Animated mesh gradient background */}
+      <div className="absolute inset-0 bg-gradient-mesh opacity-60" />
+
+      {/* Floating orbs */}
+      {[...Array(5)].map((_, i) => (
         <motion.div
-          animate={{ x: [0, 50, 0], y: [0, -30, 0], scale: [1, 1.2, 1] }}
-          transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-[20%] right-[10%] w-[400px] h-[400px] rounded-full opacity-[0.07]"
-          style={{ background: "radial-gradient(circle, hsl(185 100% 50%), transparent 70%)" }}
+          key={i}
+          className="absolute rounded-full pointer-events-none"
+          animate={{
+            x: [0, Math.random() * 100 - 50, 0],
+            y: [0, Math.random() * 100 - 50, 0],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{ duration: 10 + i * 3, repeat: Infinity, ease: "easeInOut" }}
+          style={{
+            width: 200 + i * 80,
+            height: 200 + i * 80,
+            left: `${10 + i * 18}%`,
+            top: `${15 + i * 12}%`,
+            background: `radial-gradient(circle, ${
+              i % 3 === 0
+                ? "hsl(185 100% 50% / 0.08)"
+                : i % 3 === 1
+                ? "hsl(280 100% 60% / 0.06)"
+                : "hsl(340 100% 59% / 0.05)"
+            }, transparent 70%)`,
+            filter: "blur(40px)",
+          }}
         />
-        <motion.div
-          animate={{ x: [0, -40, 0], y: [0, 40, 0], scale: [1, 1.3, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-[10%] left-[5%] w-[300px] h-[300px] rounded-full opacity-[0.05]"
-          style={{ background: "radial-gradient(circle, hsl(340 100% 59%), transparent 70%)" }}
-        />
-      </div>
+      ))}
 
       {/* Grid pattern */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+      <div
+        className="absolute inset-0 opacity-[0.02] pointer-events-none"
         style={{
           backgroundImage: `
             linear-gradient(hsl(185 100% 50%) 1px, transparent 1px),
             linear-gradient(90deg, hsl(185 100% 50%) 1px, transparent 1px)
           `,
-          backgroundSize: "60px 60px",
+          backgroundSize: "80px 80px",
         }}
       />
 
-      <div className="max-w-[1200px] mx-auto px-8 relative z-10 flex flex-col lg:flex-row items-center gap-16 w-full pt-20">
+      <div className="max-w-[1400px] mx-auto px-8 relative z-10 flex flex-col lg:flex-row items-center gap-20 w-full pt-24">
         {/* Text Content */}
         <div className="flex-1">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full mb-6"
+            className="inline-flex items-center gap-2 px-5 py-2.5 glass rounded-full mb-8"
           >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="font-orbitron text-xs text-primary tracking-wider uppercase">Available for opportunities</span>
+            <Sparkles className="w-3.5 h-3.5 text-accent" />
+            <span className="font-space text-xs text-primary/80 tracking-wider uppercase">Available for opportunities</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-orbitron text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-bold text-primary text-neon uppercase tracking-[5px] leading-none mb-6"
+            transition={{ duration: 1, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="font-orbitron text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-black uppercase tracking-[6px] leading-[0.9] mb-8"
           >
-            AJISHMA
+            <span className="text-gradient">AJISHMA</span>
             <br />
-            <span className="text-foreground">SRUTHI</span>
+            <span className="text-foreground/90">SRUTHI</span>
           </motion.h1>
 
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-2xl sm:text-3xl md:text-[2.5rem] font-light text-foreground max-w-[700px] mb-8 relative"
+            className="font-space text-xl sm:text-2xl md:text-3xl font-light text-muted-foreground max-w-[600px] mb-8"
           >
-            AI/ML Engineer & Web Developer
-            <span className="absolute -bottom-4 left-0 w-[150px] h-[3px] bg-gradient-primary" />
+            AI/ML Engineer{" "}
+            <span className="text-primary/60">&</span>{" "}
+            Web Developer
           </motion.h2>
 
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="font-orbitron text-accent font-semibold text-lg sm:text-xl tracking-wider min-h-[2rem]"
-            style={{ textShadow: "0 0 5px hsl(48 100% 50% / 0.7)" }}
+            className="font-space text-accent/90 text-lg tracking-wide min-h-[2rem] mb-10"
           >
+            <span className="text-primary/40 mr-2">{">"}</span>
             {text}
-            <span className="inline-block w-[10px] h-5 bg-primary animate-blink align-middle ml-1" />
+            <span className="inline-block w-[2px] h-5 bg-primary animate-blink align-middle ml-1" />
           </motion.div>
 
           {/* Stats row */}
@@ -124,7 +160,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
-            className="flex gap-8 mt-10 mb-10"
+            className="flex gap-10 mb-12"
           >
             {stats.map((stat, i) => (
               <motion.div
@@ -132,10 +168,10 @@ const HeroSection = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 + i * 0.1 }}
-                className="text-center"
+                className="relative"
               >
-                <div className="font-orbitron text-3xl md:text-4xl font-bold text-primary text-neon">{stat.value}</div>
-                <div className="text-muted-foreground text-sm uppercase tracking-wider mt-1">{stat.label}</div>
+                <div className="font-orbitron text-4xl md:text-5xl font-black text-gradient">{stat.value}</div>
+                <div className="text-muted-foreground text-xs uppercase tracking-[3px] mt-2 font-space">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -148,57 +184,69 @@ const HeroSection = () => {
           >
             <a
               href="#contact"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-gradient-primary text-background font-orbitron font-semibold uppercase tracking-wider shadow-neon-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-neon-xl rounded-sm"
+              className="group relative inline-flex items-center gap-3 px-10 py-4 bg-gradient-primary text-background font-orbitron font-bold uppercase tracking-wider rounded-lg overflow-hidden transition-all duration-500 hover:shadow-neon-xl hover:-translate-y-1"
             >
-              Connect With Me
+              <span className="relative z-10">Connect With Me</span>
+              <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-100 blur-xl transition-opacity" />
             </a>
             <a
               href="#projects"
-              className="inline-flex items-center gap-3 px-10 py-4 border-2 border-primary/50 text-primary font-orbitron font-semibold uppercase tracking-wider transition-all duration-300 hover:bg-primary/10 hover:border-primary hover:shadow-neon rounded-sm"
+              className="inline-flex items-center gap-3 px-10 py-4 glass rounded-lg text-primary font-orbitron font-bold uppercase tracking-wider hover-glow"
             >
               View Projects
             </a>
           </motion.div>
         </div>
 
-        {/* Profile Image */}
+        {/* Profile Image with 3D tilt */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="relative flex-shrink-0"
+          transition={{ duration: 1.2, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+          className="relative flex-shrink-0 perspective"
         >
-          <div className="relative w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] lg:w-[360px] lg:h-[450px]">
-            {/* Animated neon border */}
+          <motion.div
+            style={{ rotateX, rotateY }}
+            className="relative w-[300px] h-[380px] sm:w-[340px] sm:h-[430px] lg:w-[380px] lg:h-[480px] preserve-3d"
+          >
+            {/* Gradient border glow */}
+            <div className="absolute -inset-[2px] bg-gradient-primary rounded-2xl opacity-60 blur-sm" />
+            <div className="absolute -inset-[1px] bg-gradient-primary rounded-2xl opacity-30" />
+
+            {/* Image */}
+            <div className="relative w-full h-full rounded-2xl overflow-hidden">
+              <img
+                src={profilePhoto}
+                alt="Ajishma Sruthi P - AI/ML Engineer"
+                className="w-full h-full object-cover object-top grayscale-[15%] hover:grayscale-0 transition-all duration-700"
+              />
+              {/* Overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
+            </div>
+
+            {/* Floating badge */}
             <motion.div
-              animate={{ rotate: [0, 1, -1, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 border-2 border-primary shadow-neon rounded-sm translate-x-3 translate-y-3"
-            />
-            <motion.div
-              animate={{ rotate: [0, -1, 1, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute inset-0 border-2 border-secondary/50 rounded-sm -translate-x-2 -translate-y-2"
-            />
-            <img
-              src={profilePhoto}
-              alt="Ajishma Sruthi P - AI/ML Engineer"
-              className="relative w-full h-full object-cover object-top rounded-sm grayscale-[20%] hover:grayscale-0 transition-all duration-500"
-              style={{
-                boxShadow: "0 0 30px hsl(185 100% 50% / 0.3), 0 0 60px hsl(185 100% 50% / 0.1)",
-              }}
-            />
-            {/* Scanline overlay */}
-            <div
-              className="absolute inset-0 pointer-events-none opacity-20 rounded-sm"
-              style={{
-                background: "repeating-linear-gradient(0deg, transparent, transparent 2px, hsl(185 100% 50% / 0.05) 2px, hsl(185 100% 50% / 0.05) 4px)",
-              }}
-            />
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -bottom-4 -right-4 glass rounded-xl px-4 py-2 shadow-neon"
+            >
+              <span className="font-orbitron text-xs text-primary">AI/ML</span>
+            </motion.div>
+
+            {/* Orbiting dot */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 rounded-full bg-accent shadow-neon"
+                style={{ transformOrigin: "0 -200px" }}
+              />
+            </div>
+
             {/* Corner accents */}
-            <div className="absolute -top-2 -left-2 w-6 h-6 border-t-2 border-l-2 border-accent" />
-            <div className="absolute -bottom-2 -right-2 w-6 h-6 border-b-2 border-r-2 border-accent" />
-          </div>
+            <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-accent/60 rounded-tl-lg" />
+            <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-accent/60 rounded-br-lg" />
+          </motion.div>
         </motion.div>
       </div>
 
@@ -207,11 +255,11 @@ const HeroSection = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-muted-foreground text-xs font-orbitron tracking-[3px] uppercase">Scroll</span>
+        <span className="text-muted-foreground/50 text-[10px] font-space tracking-[5px] uppercase">Scroll</span>
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-          <ArrowDown className="w-4 h-4 text-primary" />
+          <ArrowDown className="w-4 h-4 text-primary/40" />
         </motion.div>
       </motion.div>
     </section>

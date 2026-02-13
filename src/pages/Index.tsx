@@ -10,6 +10,7 @@ import ExperienceSection from "@/components/portfolio/ExperienceSection";
 import EducationSection from "@/components/portfolio/EducationSection";
 import CertificationsSection from "@/components/portfolio/CertificationsSection";
 import ProjectsSection from "@/components/portfolio/ProjectsSection";
+import BlogSection from "@/components/portfolio/BlogSection";
 import ContactSection from "@/components/portfolio/ContactSection";
 import Footer from "@/components/portfolio/Footer";
 import ScrollToTop from "@/components/portfolio/ScrollToTop";
@@ -40,6 +41,7 @@ const Index = () => {
          <LanguagesInterestsSection />
          <CertificationsSection />
          <ProjectsSection />
+         <BlogSection />
          <ContactSection />
          <Footer />
          <ScrollToTop />

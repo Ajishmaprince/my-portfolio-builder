@@ -5,6 +5,7 @@ import Navbar from "@/components/portfolio/Navbar";
 import HeroSection from "@/components/portfolio/HeroSection";
 import AboutSection from "@/components/portfolio/AboutSection";
 import SkillsSection from "@/components/portfolio/SkillsSection";
+import LanguagesInterestsSection from "@/components/portfolio/LanguagesInterestsSection";
 import ExperienceSection from "@/components/portfolio/ExperienceSection";
 import EducationSection from "@/components/portfolio/EducationSection";
 import CertificationsSection from "@/components/portfolio/CertificationsSection";
@@ -28,21 +29,22 @@ const Index = () => {
         {isLoading && <LoadingScreen onComplete={handleLoadingComplete} />}
       </AnimatePresence>
 
-      <div className={`min-h-screen bg-background ${isLoading ? "overflow-hidden h-screen" : ""}`}>
-        <BinaryRain />
-        <Navbar />
-        <HeroSection />
-        <AboutSection />
-        <ExperienceSection />
-        <EducationSection />
-        <SkillsSection />
-        <CertificationsSection />
-        <ProjectsSection />
-        <ContactSection />
-        <Footer />
-        <ScrollToTop />
-        <InteractiveTerminal />
-      </div>
+       <div className={`min-h-screen bg-background ${isLoading ? "overflow-hidden h-screen" : ""}`}>
+         <BinaryRain />
+         <Navbar />
+         <HeroSection />
+         <AboutSection />
+         <ExperienceSection />
+         <EducationSection />
+         <SkillsSection />
+         <LanguagesInterestsSection />
+         <CertificationsSection />
+         <ProjectsSection />
+         <ContactSection />
+         <Footer />
+         <ScrollToTop />
+         <InteractiveTerminal />
+       </div>
     </>
   );
 };

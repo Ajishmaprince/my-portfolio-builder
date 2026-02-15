@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import ThemeToggle from "./ThemeToggle";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -78,13 +79,16 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          className="md:hidden text-primary w-10 h-10 flex items-center justify-center glass rounded-lg"
-          onClick={() => setMobileOpen(!mobileOpen)}
-        >
-          {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden text-primary w-10 h-10 flex items-center justify-center glass rounded-lg"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

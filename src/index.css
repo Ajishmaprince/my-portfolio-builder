@@ -46,6 +46,46 @@
                      radial-gradient(at 80% 80%, hsl(340 100% 59% / 0.1) 0%, transparent 50%),
                      radial-gradient(at 50% 50%, hsl(280 100% 60% / 0.08) 0%, transparent 50%);
   }
+
+  .light {
+    --background: 210 20% 96%;
+    --foreground: 240 30% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 30% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 30% 12%;
+
+    --primary: 185 80% 38%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 340 80% 52%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 210 15% 90%;
+    --muted-foreground: 220 10% 40%;
+
+    --accent: 48 90% 45%;
+    --accent-foreground: 240 30% 12%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 15% 85%;
+    --input: 220 15% 80%;
+    --ring: 185 80% 38%;
+
+    --glass: 0 0% 100% / 0.7;
+    --glass-border: 220 15% 80% / 0.5;
+    --glass-hover: 185 80% 38% / 0.08;
+
+    --neon-glow: 0 0 10px hsl(185 80% 38% / 0.3), 0 0 30px hsl(185 80% 38% / 0.15);
+    --gradient-primary: linear-gradient(135deg, hsl(185 80% 38%), hsl(280 70% 50%), hsl(340 80% 52%));
+    --gradient-mesh: radial-gradient(at 20% 20%, hsl(185 80% 38% / 0.08) 0%, transparent 50%),
+                     radial-gradient(at 80% 80%, hsl(340 80% 52% / 0.06) 0%, transparent 50%),
+                     radial-gradient(at 50% 50%, hsl(280 70% 50% / 0.04) 0%, transparent 50%);
+  }
 }
 
 @layer base {

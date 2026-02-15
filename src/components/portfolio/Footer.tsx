@@ -42,7 +42,7 @@ const Footer = () => {
         </div>
 
         <p className="text-muted-foreground/40 text-xs font-space tracking-[3px] flex items-center justify-center gap-2 uppercase">
-          © 2025 Ajishma Sruthi P · Made with <Heart className="w-3 h-3 text-secondary" /> · All rights reserved
+          © {new Date().getFullYear()} Ajishma Sruthi P · Made with <Heart className="w-3 h-3 text-secondary" /> · All rights reserved
         </p>
       </div>
     </footer>
